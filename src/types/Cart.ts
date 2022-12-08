@@ -3,5 +3,6 @@ export type Cart = {
   price: number, 
   title: string,
   shipping: number,
+  amount: number
 }
 export type CartInside = Cart[]

@@ -1,27 +1,30 @@
+import { useState } from 'react';
+import CartItem from './CartItem';
 import { useAppContainer } from './Context';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 const Cart = () => {
-  const { insideCart, onCartProductPlus, onCartProductDelete } = useAppContainer();
-
+  const { insideCart, amountItems } = useAppContainer();
+  const [open, setOpen] = useState(false);
   return (
     <div>
-      {insideCart.map(cartProduct => (
-        <div>
-          <div>{cartProduct.title}</div>
-          <div>{cartProduct.shipping}€</div>
-          <div>{cartProduct.price}€</div>
-          <select onChange={changing => onCartProductPlus(cartProduct.id, parseInt(changing.target.value))}>
-            <option value={1 * cartProduct.price} >1x</option>
-            <option value={1 * cartProduct.price}>2x</option>
-            <option value={2 * cartProduct.price}>3x</option>
-            <option value={3 * cartProduct.price}>4x</option>
-            <option value={4 * cartProduct.price}>5x</option>
-          </select>
-          <div>Total: {cartProduct.shipping + cartProduct.price}€</div> 
-          <button onClick={() => onCartProductDelete(cartProduct.id)}>X</button>  
+      {!open && (
+        <div onClick={() => setOpen(true)}>
+          <ShoppingCartIcon sx={{color: "#20ffca", fontSize: 45, margin: 1 }} />
+          <span className='CartAmountSpan' >{amountItems}</span>
         </div>
-      ))}
-      
+      )}
+      {open && (
+        <div className='CartInside'>
+          <div onClick={() => setOpen(false)}>
+            <ShoppingCartIcon sx={{color: "#b3ffed" ,fontSize: 45, margin: "10px 95% 10px 5%" }} />
+            <span className='CartAmountSpan' >{amountItems}</span>
+          </div>
+          {insideCart.map(cartProduct => (
+            <CartItem cartProduct={cartProduct} setOpen={setOpen} key={cartProduct.id} />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

@@ -11,7 +11,7 @@ const Filterring = () => {
   };
 
   let filteredData = Products.filter(Products => {
-    if (selectedFilter === '' || selectedFilter === "Delete") {
+    if (selectedFilter === '' || selectedFilter === 'Delete') {
       return Products;
     } else {
       if (
@@ -31,7 +31,7 @@ const Filterring = () => {
   });
 
   return (
-    <Box sx={{ padding: 3}}>
+    <Box sx={{ padding: 3 }}>
       <Button
         variant='text'
         id='S'
@@ -76,7 +76,7 @@ const Filterring = () => {
       </Button>
       <Box
         sx={{
-          margin: "auto",
+          margin: 'auto',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',

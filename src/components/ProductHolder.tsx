@@ -7,6 +7,7 @@ const ProductHolder = () => {
 
   return (
     <Box>
+      <h1>Idea from <a href='https://react-shopping-cart-67954.firebaseapp.com/' target={"_blank"} rel="noreferrer">This Site</a></h1>
       <Filterring />
     </Box>
   );

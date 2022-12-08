@@ -17,10 +17,10 @@ function App() {
             marginX: '2%',
           }}
         >
-          <Box sx={{ width: '85%' }}>
+          <Box sx={{ width: '100%' }}>
             <ProductHolder />
           </Box>
-          <Box sx={{ width: '15%' }}>
+          <Box sx={{position: "fixed", top: 0, right: "15px"}}>
             <Cart />
           </Box>
         </Box>

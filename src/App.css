@@ -12,3 +12,28 @@
   left: 58%;
   width: fit-content;
 }
+
+.CartInside {
+  background-color: rgb(27, 27, 27);
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  right: 0;
+  color: white;
+  width: 400px;
+  overflow: auto;
+  overflow-x: hidden;
+}
+
+.CartAmountSpan {
+  position: absolute;
+  top: 40px;
+  left: 30.5px;
+  background: #fcff00;
+  color: black;
+  /* padding: 2px; */
+  height: 23px;
+  width: 23px;
+  border-radius: 60px;
+
+}
