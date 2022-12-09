@@ -1,14 +1,14 @@
 import { Box, Button, Paper, Typography } from '@mui/material';
-import { Dispatch, SetStateAction, useState } from 'react';
-import { Cart } from '../types/Cart';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { CartItem } from '../types/Cart';
 import { useAppContainer } from './Context';
 
 type Prosp = {
-  cartProduct: Cart;
+  cartProduct: CartItem;
   setOpen: Dispatch<SetStateAction<boolean>>;
 };
 
-const CartItem = ({ cartProduct, setOpen }: Prosp) => {
+const CartItemInfo = ({ cartProduct, setOpen }: Prosp) => {
   const {
     insideCart,
     onCartProductPlus,
@@ -42,7 +42,7 @@ const CartItem = ({ cartProduct, setOpen }: Prosp) => {
               fontSize: 16,
               cursor: 'pointer',
             }}
-            onClick={() => onCartProductDelete(cartProduct.id)}
+            onClick={() => onCartProductDelete(cartProduct.id, cartProduct.totalPrice, cartProduct.amount)}
           >
             X
           </Box>
@@ -83,7 +83,9 @@ const CartItem = ({ cartProduct, setOpen }: Prosp) => {
                 maxHeight: '20px',
                 fontSize: '1.4rem',
               }}
-              onClick={() => onCartProductPlus(cartProduct.id, cartProduct.price)}
+              onClick={() =>
+                onCartProductPlus(cartProduct.id, cartProduct.price)
+              }
             >
               +
             </Button>
@@ -110,7 +112,7 @@ const CartItem = ({ cartProduct, setOpen }: Prosp) => {
             <Typography variant='body1'>{cartProduct.price}€</Typography>
           </Box>
           <Typography variant='subtitle1' sx={{ marginRight: 1, fontSize: 17 }}>
-            Total: {cartProduct.shipping + cartProduct.price}€
+            Total: {Math.round(cartProduct.shipping + cartProduct.totalPrice *100) /100}€
           </Typography>
         </Box>
       </Paper>
@@ -118,4 +120,4 @@ const CartItem = ({ cartProduct, setOpen }: Prosp) => {
     // }
   );
 };
-export default CartItem;
+export default CartItemInfo;

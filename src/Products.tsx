@@ -20,7 +20,7 @@ export const Products = [
     price: 9.99,
     imageFront: "cheese",
     sizes: "S, M, L, XL",
-    shipping: "4,99"
+    shipping: "Free"
   },
   {
     id: 4,
@@ -35,7 +35,7 @@ export const Products = [
     price: 14,
     imageFront: "cut",
     sizes: "S, M, L",
-    shipping: "2.99"
+    shipping: "Free"
   },
   {
     id: 6,
@@ -103,7 +103,7 @@ export const Products = [
     price: 12,
     imageFront: "quatro",
     sizes: "M, L, Xl",
-    shipping: "2.99"
+    shipping: "Free"
   },{
     id: 15,
     title: "Pizza with Tomatos",

@@ -10,12 +10,14 @@ export type AppState = {
     price: number,
     title: string,
     shipping: number,
-    amount: number
+    amount: number,
+    totalPrice: number
   ) => void;
   amountItems: number;
-  onCartProductPlus: (productId: number, newPrice: number) => void;
-  onCartProductMinus: (productId: number, newPrice: number) => void;
-  onCartProductDelete: (productId: number) => void;
+  onCartProductPlus: (productId: number, totalPrice: number) => void;
+  onCartProductMinus: (productId: number, totalPrice: number) => void;
+  onCartProductDelete: (productId: number, totalPrice: number, productAmount: number) => void;
+  finalPrice: number;
 };
 
 type Props = {
@@ -24,6 +26,7 @@ type Props = {
 const Container = ({ children }: Props) => {
   const [cart, setCart] = useState<CartInside>([]);
   const [totalAmount, setTotalAmount] = useState(0);
+  const [totalCartPrice, setTotalCartPrice] = useState<number>(0);
 
   const handleAddToCart = (
     id: number,
@@ -39,46 +42,54 @@ const Container = ({ children }: Props) => {
         price,
         title,
         shipping,
-        amount: 1,
+        amount,
+        totalPrice: price,
       },
     ]);
     setTotalAmount(totalAmount + 1);
+    setTotalCartPrice(totalCartPrice + price + shipping);
   };
-  const handleCartProductPlus = (productId: number, newPrice: number) => {
+  const handleCartProductPlus = (productId: number, totalPrice: number) => {
     setCart(prevProduct =>
       prevProduct.map(product => {
         if (product.id === productId) {
           return {
             ...product,
-            price: product.price + newPrice,
+            totalPrice: product.totalPrice + product.price,
             amount: product.amount + 1,
           };
         }
         return { ...product };
       })
     );
+    setTotalCartPrice(totalCartPrice + totalPrice);
     setTotalAmount(totalAmount + 1);
   };
-  const handleCartProductMinus = (productId: number, newPrice: number) => {
+
+
+  const handleCartProductMinus = (productId: number, totalPrice: number) => {
     setCart(prevProduct =>
       prevProduct.map(product => {
         if (product.id === productId) {
           return {
             ...product,
-            price: product.price - newPrice,
+            totalPrice: product.totalPrice - product.price,
             amount: product.amount - 1,
           };
         }
         return { ...product };
       })
     );
+    setTotalCartPrice(totalCartPrice - totalPrice);
     setTotalAmount(totalAmount - 1);
   };
 
-  const handleCartProductDelete = (productId: number) => {
+  const handleCartProductDelete = (productId: number, totalPrice: number, productAmount: number) => {
     setCart(prevProduct =>
       prevProduct.filter(product => product.id !== productId)
     );
+    setTotalCartPrice(totalCartPrice - totalPrice);
+    setTotalAmount(totalAmount - productAmount);
   };
 
   const appState: AppState = {
@@ -88,6 +99,7 @@ const Container = ({ children }: Props) => {
     onCartProductMinus: handleCartProductMinus,
     amountItems: totalAmount,
     onCartProductDelete: handleCartProductDelete,
+    finalPrice: totalCartPrice,
   };
 
   return <Provider value={appState}>{children(appState)}</Provider>;

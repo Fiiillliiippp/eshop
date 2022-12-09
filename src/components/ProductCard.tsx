@@ -20,13 +20,13 @@ const ProductCard = ({ product }: Props) => {
   const handleAddToCartClick = () => {
     if (product.shipping === 'free') {
       const shippingPrice = 0;
-      onAddToCartClick(product.id, product.price, product.title, shippingPrice, 1 );
+      onAddToCartClick(product.id, product.price, product.title, shippingPrice, 1, product.price );
     } else {
     }
     const shippingPrice =
       product.shipping === 'Free' ? 0 : parseInt(product.shipping);
 
-    onAddToCartClick(product.id, product.price, product.title, shippingPrice, 1);
+    onAddToCartClick(product.id, product.price, product.title, shippingPrice, 1, product.price);
   };
 
   return (
