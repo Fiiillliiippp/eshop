@@ -7,7 +7,7 @@ type Props = {
     title: string;
     price: number;
     imageFront: string;
-    sizes: string;
+    sizes: string[];
     shipping: string;
   };
 };
@@ -20,13 +20,27 @@ const ProductCard = ({ product }: Props) => {
   const handleAddToCartClick = () => {
     if (product.shipping === 'free') {
       const shippingPrice = 0;
-      onAddToCartClick(product.id, product.price, product.title, shippingPrice, 1, product.price );
+      onAddToCartClick(
+        product.id,
+        product.price,
+        product.title,
+        shippingPrice,
+        1,
+        product.sizes
+      );
     } else {
     }
     const shippingPrice =
       product.shipping === 'Free' ? 0 : parseInt(product.shipping);
 
-    onAddToCartClick(product.id, product.price, product.title, shippingPrice, 1, product.price);
+    onAddToCartClick(
+      product.id,
+      product.price,
+      product.title,
+      shippingPrice,
+      1,
+      product.sizes
+    );
   };
 
   return (
@@ -49,7 +63,9 @@ const ProductCard = ({ product }: Props) => {
         height='250px'
       />
       <Typography variant='h5'>{product.title}</Typography>
-      <Typography variant='caption'>{product.sizes}</Typography>
+      {product.sizes.map(size => (
+        <Typography variant='caption' className='pizzaSize' key={Math.random()*10}> {size} </Typography>
+      ))}
       <Typography variant='h6'>{product.price}€</Typography>
       <Button
         variant='contained'

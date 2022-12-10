@@ -14,7 +14,28 @@ const CartItemInfo = ({ cartProduct, setOpen }: Prosp) => {
     onCartProductPlus,
     onCartProductDelete,
     onCartProductMinus,
+    onSizeChange,
   } = useAppContainer();
+
+  const handleSizeChange = (size: any) => {
+    switch (size.target.value) {
+      case 'M':
+        onSizeChange(cartProduct.id, cartProduct.price);
+        break;
+      case 'S':
+        onSizeChange(cartProduct.id, cartProduct.price - 1);
+        break;
+      case 'L':
+        onSizeChange(cartProduct.id, cartProduct.price + 2.5);
+        break;
+      case 'XL':
+        onSizeChange(cartProduct.id, cartProduct.price + 3.5);
+        break;
+      case 'XXL':
+        onSizeChange(cartProduct.id, cartProduct.price + 4);
+        break;
+    }
+  };
 
   return (
     <Box sx={{ marginY: 2 }}>
@@ -42,7 +63,13 @@ const CartItemInfo = ({ cartProduct, setOpen }: Prosp) => {
               fontSize: 16,
               cursor: 'pointer',
             }}
-            onClick={() => onCartProductDelete(cartProduct.id, cartProduct.totalPrice, cartProduct.amount)}
+            onClick={() =>
+              onCartProductDelete(
+                cartProduct.id,
+                cartProduct.totalPrice,
+                cartProduct.amount
+              )
+            }
           >
             X
           </Box>
@@ -96,6 +123,59 @@ const CartItemInfo = ({ cartProduct, setOpen }: Prosp) => {
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'baseline',
+            height: '26px',
+            marginTop: '5px',
+          }}
+        >
+          <Typography variant='subtitle2'>Select pizza size:</Typography>
+          <select onChange={size => handleSizeChange(size)}>
+            <option value={'none'}>Choose Pizza Size</option>
+            {cartProduct.size.map(pizzaSize =>
+              // (
+              //   <option value={pizzaSize}>{pizzaSize}</option>
+              // )
+              {
+                switch (pizzaSize) {
+                  case 'M':
+                    return (
+                      <option value={pizzaSize}>
+                        {pizzaSize} {cartProduct.price}
+                      </option>
+                    );
+                  case 'S':
+                    return (
+                      <option value={pizzaSize}>
+                        {pizzaSize} {cartProduct.price - 1}€
+                      </option>
+                    );
+                  case 'L':
+                    return (
+                      <option value={pizzaSize}>
+                        {pizzaSize} {cartProduct.price + 2.5}€
+                      </option>
+                    );
+                  case 'XL':
+                    return (
+                      <option value={pizzaSize}>
+                        {pizzaSize} {cartProduct.price + 3.5}€
+                      </option>
+                    );
+                  case 'XXL':
+                    return (
+                      <option value={pizzaSize}>
+                        {pizzaSize} {cartProduct.price + 4}€
+                      </option>
+                    );
+                }
+              }
+            )}
+          </select>
+        </Box>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'baseline',
             height: '22px',
           }}
         >
@@ -112,7 +192,10 @@ const CartItemInfo = ({ cartProduct, setOpen }: Prosp) => {
             <Typography variant='body1'>{cartProduct.price}€</Typography>
           </Box>
           <Typography variant='subtitle1' sx={{ marginRight: 1, fontSize: 17 }}>
-            Total: {Math.round(cartProduct.shipping + cartProduct.totalPrice *100) /100}€
+            Total:{' '}
+            {Math.round(cartProduct.shipping + cartProduct.totalPrice * 100) /
+              100}
+            €
           </Typography>
         </Box>
       </Paper>

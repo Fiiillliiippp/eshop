@@ -21,11 +21,13 @@ const Filterring = () => {
           .toLowerCase()
           .includes(selectedFilter.toLowerCase());
       } else if (
-        Products.sizes.toLowerCase().includes(selectedFilter.toLowerCase())
+        Products.sizes.find(prodSize =>
+          prodSize.toLowerCase().includes(selectedFilter.toLowerCase())
+        )
       ) {
-        return Products.sizes
-          .toLowerCase()
-          .includes(selectedFilter.toLowerCase());
+        return Products.sizes.map(prodSize =>
+          prodSize.toLowerCase().includes(selectedFilter.toLowerCase())
+        );
       }
     }
   });
@@ -59,6 +61,13 @@ const Filterring = () => {
         onClick={clicking => handleValueClick(clicking)}
       >
         Xl
+      </Button>
+      <Button
+        variant='text'
+        id='XXl'
+        onClick={clicking => handleValueClick(clicking)}
+      >
+        XXl
       </Button>
       <Button
         variant='text'

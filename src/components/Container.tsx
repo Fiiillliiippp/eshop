@@ -11,13 +11,18 @@ export type AppState = {
     title: string,
     shipping: number,
     amount: number,
-    totalPrice: number
+    size: string[]
   ) => void;
   amountItems: number;
   onCartProductPlus: (productId: number, totalPrice: number) => void;
   onCartProductMinus: (productId: number, totalPrice: number) => void;
-  onCartProductDelete: (productId: number, totalPrice: number, productAmount: number) => void;
+  onCartProductDelete: (
+    productId: number,
+    totalPrice: number,
+    productAmount: number
+  ) => void;
   finalPrice: number;
+  onSizeChange: (productId: number, sizeCost: number) => void;
 };
 
 type Props = {
@@ -33,19 +38,38 @@ const Container = ({ children }: Props) => {
     price: number,
     title: string,
     shipping: number,
-    amount: number
+    amount: number,
+    size: string[]
   ) => {
-    setCart(prevCart => [
-      ...prevCart,
-      {
-        id,
-        price,
-        title,
-        shipping,
-        amount,
-        totalPrice: price,
-      },
-    ]);
+    setCart(prevItems => {
+      const updatedItems = prevItems.map(item => {
+        if (item.id === id) {
+          return {
+            ...item,
+            totalPrice: item.totalPrice + price,
+            amount: item.amount + 1,
+          };
+        } else {
+          return item;
+        }
+      });
+      const itemExists = updatedItems.find(item => item.id === id);
+      if (!itemExists)
+        return [
+          ...prevItems,
+          {
+            id,
+            price,
+            title,
+            shipping,
+            amount,
+            totalPrice: price,
+            size,
+          },
+        ];
+      return updatedItems;
+    });
+
     setTotalAmount(totalAmount + 1);
     setTotalCartPrice(totalCartPrice + price + shipping);
   };
@@ -66,7 +90,6 @@ const Container = ({ children }: Props) => {
     setTotalAmount(totalAmount + 1);
   };
 
-
   const handleCartProductMinus = (productId: number, totalPrice: number) => {
     setCart(prevProduct =>
       prevProduct.map(product => {
@@ -84,7 +107,29 @@ const Container = ({ children }: Props) => {
     setTotalAmount(totalAmount - 1);
   };
 
-  const handleCartProductDelete = (productId: number, totalPrice: number, productAmount: number) => {
+  const handleSizeChanging = (productId: number, sizeCost: number) => {
+    setCart(prevItems =>
+      prevItems.map(item => {
+        if (item.id === productId) {
+          return {
+            ...item,
+            totalPrice: sizeCost * item.amount,
+          };
+        }
+
+        return item;
+      })
+    );
+    cart.map(item => 
+      setTotalCartPrice(totalCartPrice - item.totalPrice + (item.amount * sizeCost))
+      )
+  };
+
+  const handleCartProductDelete = (
+    productId: number,
+    totalPrice: number,
+    productAmount: number
+  ) => {
     setCart(prevProduct =>
       prevProduct.filter(product => product.id !== productId)
     );
@@ -100,6 +145,7 @@ const Container = ({ children }: Props) => {
     amountItems: totalAmount,
     onCartProductDelete: handleCartProductDelete,
     finalPrice: totalCartPrice,
+    onSizeChange: handleSizeChanging,
   };
 
   return <Provider value={appState}>{children(appState)}</Provider>;

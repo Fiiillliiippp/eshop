@@ -36,7 +36,7 @@ const Cart = () => {
               key={cartProduct.id}
             />
           ))}
-          <div>FinalPrice {finalPrice}€ </div>
+          <div>FinalPrice {Math.round(finalPrice * 100) / 100}€ </div>
         </div>
       )}
     </div>

@@ -37,3 +37,7 @@
   border-radius: 60px;
 
 }
+
+.pizzaSize::after {
+  content: "|";
+}

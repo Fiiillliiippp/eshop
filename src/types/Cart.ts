@@ -5,5 +5,6 @@ export type CartItem = {
   shipping: number;
   amount: number;
   totalPrice: number;
+  size: string[]
 };
 export type CartInside = CartItem[];
