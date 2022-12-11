@@ -2,6 +2,7 @@ import { useState } from 'react';
 import CartItemInfo from './CartItem';
 import { useAppContainer } from './Context';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { Box } from '@mui/material';
 
 const Cart = () => {
   const { insideCart, amountItems, finalPrice } = useAppContainer();
@@ -9,7 +10,7 @@ const Cart = () => {
   return (
     <div>
       {!open && (
-        <div onClick={() => setOpen(true)}>
+        <div className='closedCartIcon' onClick={() => setOpen(true)}>
           <ShoppingCartIcon
             sx={{ color: '#20ffca', fontSize: 45, margin: 1 }}
           />
@@ -17,8 +18,8 @@ const Cart = () => {
         </div>
       )}
       {open && (
-        <div className='CartInside'>
-          <div onClick={() => setOpen(false)}>
+        <div>
+          <div className='openCartIcon' onClick={() => setOpen(false)}>
             <ShoppingCartIcon
               sx={{
                 color: '#b3ffed',
@@ -28,15 +29,18 @@ const Cart = () => {
             />
             <span className='CartAmountSpan'>{amountItems}</span>
           </div>
-
-          {insideCart.map(cartProduct => (
-            <CartItemInfo
-              cartProduct={cartProduct}
-              setOpen={setOpen}
-              key={cartProduct.id}
-            />
-          ))}
-          <div>FinalPrice {Math.round(finalPrice * 100) / 100}€ </div>
+          <div className='CartInside'>
+            {insideCart.map(cartProduct => (
+              <CartItemInfo
+                cartProduct={cartProduct}
+                setOpen={setOpen}
+                key={cartProduct.id}
+              />
+            ))}
+            <Box className='finalPrice'>
+              FinalPrice {Math.round(finalPrice * 100) / 100}€{' '}
+            </Box>
+          </div>
         </div>
       )}
     </div>

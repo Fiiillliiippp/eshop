@@ -5,7 +5,7 @@ export const Products = [
     price: 10,
     imageFront: 'bazal',
     sizes: ['S', 'M'],
-    shipping: 'Free',
+    shipping: '2.99',
   },
   {
     id: 2,
@@ -21,7 +21,7 @@ export const Products = [
     price: 9.99,
     imageFront: 'cheese',
     sizes: ['S', 'M', 'L', 'XL'],
-    shipping: 'Free',
+    shipping: '2.99',
   },
   {
     id: 4,
@@ -53,7 +53,7 @@ export const Products = [
     price: 9.99,
     imageFront: 'green',
     sizes: ['S', 'M', 'L', 'XL'],
-    shipping: 'Free',
+    shipping: '2.99',
   },
   {
     id: 8,
@@ -68,7 +68,7 @@ export const Products = [
     title: 'Pizza with Paprika',
     price: 18,
     imageFront: 'paprika',
-    sizes: ['L', 'Xl', 'XXl'],
+    sizes: ['M' ,'L', 'Xl', 'XXl'],
     shipping: 'Free',
   },
   {
@@ -109,7 +109,7 @@ export const Products = [
     price: 12,
     imageFront: 'quatro',
     sizes: ['M', 'L', 'Xl'],
-    shipping: 'Free',
+    shipping: '2.99',
   },
   {
     id: 15,
@@ -117,7 +117,7 @@ export const Products = [
     price: 12.99,
     imageFront: 'red',
     sizes: ['L', 'XL', 'XXL'],
-    shipping: 'Free',
+    shipping: '2.99',
   },
   {
     id: 16,
@@ -133,7 +133,7 @@ export const Products = [
     price: 16,
     imageFront: 'zazvor',
     sizes: ['M', 'L', ' Xl', 'XXl'],
-    shipping: 'Free',
+    shipping: '3.50',
   },
 ];
 

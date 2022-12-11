@@ -63,7 +63,7 @@ const Container = ({ children }: Props) => {
             title,
             shipping,
             amount,
-            totalPrice: price,
+            totalPrice: price + shipping,
             size,
           },
         ];
@@ -72,6 +72,26 @@ const Container = ({ children }: Props) => {
 
     setTotalAmount(totalAmount + 1);
     setTotalCartPrice(totalCartPrice + price + shipping);
+  };
+
+  const handleSizeChanging = (productId: number, sizeCost: number) => {
+    setCart(prevItems =>
+      prevItems.map(item => {
+        if (item.id === productId) {
+          return {
+            ...item,
+            totalPrice: (sizeCost + item.shipping) * item.amount,
+          };
+        }
+
+        return item;
+      })
+    );
+    cart.map(item =>
+      setTotalCartPrice(
+        totalCartPrice - item.totalPrice + item.amount * sizeCost
+      )
+    );
   };
   const handleCartProductPlus = (productId: number, totalPrice: number) => {
     setCart(prevProduct =>
@@ -105,24 +125,6 @@ const Container = ({ children }: Props) => {
     );
     setTotalCartPrice(totalCartPrice - totalPrice);
     setTotalAmount(totalAmount - 1);
-  };
-
-  const handleSizeChanging = (productId: number, sizeCost: number) => {
-    setCart(prevItems =>
-      prevItems.map(item => {
-        if (item.id === productId) {
-          return {
-            ...item,
-            totalPrice: sizeCost * item.amount,
-          };
-        }
-
-        return item;
-      })
-    );
-    cart.map(item => 
-      setTotalCartPrice(totalCartPrice - item.totalPrice + (item.amount * sizeCost))
-      )
   };
 
   const handleCartProductDelete = (

@@ -31,7 +31,8 @@ const ProductCard = ({ product }: Props) => {
     } else {
     }
     const shippingPrice =
-      product.shipping === 'Free' ? 0 : parseInt(product.shipping);
+      product.shipping === 'Free' ? 0 : parseFloat(product.shipping);
+    console.log(parseFloat(product.shipping));
 
     onAddToCartClick(
       product.id,
@@ -64,7 +65,14 @@ const ProductCard = ({ product }: Props) => {
       />
       <Typography variant='h5'>{product.title}</Typography>
       {product.sizes.map(size => (
-        <Typography variant='caption' className='pizzaSize' key={Math.random()*10}> {size} </Typography>
+        <Typography
+          variant='caption'
+          className='pizzaSize'
+          key={Math.random() * 10}
+        >
+          {' '}
+          {size}{' '}
+        </Typography>
       ))}
       <Typography variant='h6'>{product.price}€</Typography>
       <Button
